@@ -130,5 +130,21 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    (function() {
+      var timerEl = document.getElementById('countdown-timer');
+      if (!timerEl) return;
+      var count = 3;
+      timerEl.textContent = count;
+      var interval = setInterval(function() {
+        count--;
+        if (count >= 0) timerEl.textContent = count;
+        if (count <= 0) {
+          clearInterval(interval);
+          window.location.href = 'index.html';
+        }
+      }, 1000);
+    })();
+  </script>
 </body>
 </html>

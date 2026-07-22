@@ -493,7 +493,7 @@ function initForms() {
 
         const data = await response.json();
 
-        if (response.ok && data.success) {
+        if (response.ok || response.status === 200 || data.success) {
           form.reset();
           window.location.href = 'thank-you.html';
         } else {
