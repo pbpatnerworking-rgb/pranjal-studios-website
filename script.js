@@ -418,7 +418,7 @@ const SecuritySystem = {
   }
 };
 
-/* --- Interactive Forms & Validation (FormSubmit + Turnstile) --- */
+/* --- Interactive Forms & Validation (FormSubmit) --- */
 function initForms() {
   const forms = document.querySelectorAll('form');
   
@@ -460,14 +460,7 @@ function initForms() {
         return;
       }
 
-      // 3. Turnstile Verification Check (if Turnstile widget present)
-      const turnstileResp = form.querySelector('[name="cf-turnstile-response"]');
-      if (turnstileResp && window.turnstile && !turnstileResp.value) {
-        showToast('Please complete the Cloudflare security verification.', 'warning');
-        return;
-      }
-
-      // 4. Gather & Sanitize Form Data
+      // 3. Gather & Sanitize Form Data
       const formData = new FormData(form);
       const payload = {};
       formData.forEach((value, key) => {
@@ -495,9 +488,6 @@ function initForms() {
         if (response.ok) {
           showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
           form.reset();
-          if (window.turnstile) {
-            try { window.turnstile.reset(); } catch (err) {}
-          }
         } else {
           showToast('Failed to submit form. Please try again.', 'error');
         }
