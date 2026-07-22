@@ -234,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileDrawer();
   initAccordions();
   initSearchAndFilters();
+  initContactFormValidation();
   initForms();
   initScrollAnimations();
   initModalSystem();
@@ -419,100 +420,116 @@ const SecuritySystem = {
   }
 };
 
-/* --- Interactive Forms & Validation (Web3Forms & FormSubmit) --- */
+/* --- Contact Form Realtime Submit Button Enabler --- */
+function initContactFormValidation() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  const submitBtn = document.getElementById('contact-submit-btn');
+  if (!submitBtn) return;
+
+  const nameInput    = document.getElementById('contact-name');
+  const emailInput   = document.getElementById('contact-email');
+  const subjectInput = document.getElementById('contact-subject');
+  const msgInput     = document.getElementById('contact-message');
+
+  if (!nameInput || !emailInput || !subjectInput || !msgInput) return;
+
+  const emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+  function checkValidity() {
+    const allFilled =
+      nameInput.value.trim().length > 0 &&
+      emailInput.value.trim().length > 0 &&
+      emailRe.test(emailInput.value.trim()) &&
+      subjectInput.value.trim().length > 0 &&
+      msgInput.value.trim().length > 0;
+
+    submitBtn.disabled = !allFilled;
+    submitBtn.style.opacity = allFilled ? '1' : '0.5';
+    submitBtn.style.cursor  = allFilled ? 'pointer' : 'not-allowed';
+  }
+
+  [nameInput, emailInput, subjectInput, msgInput].forEach(el => {
+    el.addEventListener('input', checkValidity);
+    el.addEventListener('change', checkValidity);
+  });
+
+  // Run once on init
+  checkValidity();
+}
+
+/* --- Official Web3Forms Integration --- */
 function initForms() {
-  const forms = document.querySelectorAll('form');
-  
-  forms.forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  const contactForm = document.getElementById('contact-form');
+  if (!contactForm) return;
 
-      const formId = form.getAttribute('id') || 'generic_form';
-      
-      // 1. Anti-Spam Honeypot Check
-      const honeypot = form.querySelector('[name="botcheck"], [name="_honey"]');
-      if (honeypot && (honeypot.checked || honeypot.value)) {
-        form.reset();
-        return;
-      }
+  const submitBtn = document.getElementById('contact-submit-btn');
 
-      // 2. Validate all required inputs & email format
-      const inputs = form.querySelectorAll('input, textarea, select');
-      let isValid = true;
+  contactForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-      inputs.forEach(input => {
-        const val = input.value.trim();
-        if (input.hasAttribute('required') && !val) {
-          isValid = false;
-          input.classList.add('input-error');
-        } else {
-          input.classList.remove('input-error');
-        }
+    // Anti-spam honeypot check
+    const botcheck = contactForm.querySelector('[name="botcheck"]');
+    if (botcheck && botcheck.checked) {
+      contactForm.reset();
+      return;
+    }
 
-        if (input.type === 'email' && val && !SecuritySystem.isValidEmail(val)) {
-          isValid = false;
-          input.classList.add('input-error');
-          showToast('Please enter a valid email address.', 'error');
-        }
+    // Show loading state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.7';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.innerHTML = '<span class="btn-spinner"></span> Sending...';
+    }
+
+    // Collect form data (official Web3Forms method)
+    const formData = new FormData(contactForm);
+    const object   = Object.fromEntries(formData);
+    const json     = JSON.stringify(object);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method:  'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept':       'application/json'
+        },
+        body: json
       });
 
-      if (!isValid) {
-        showToast('Please fill out all required fields correctly.', 'error');
-        return;
-      }
+      const data = await response.json();
 
-      // 3. Gather Form Data & Submit to Web3Forms API
-      const targetUrl = form.getAttribute('action') || 'https://api.web3forms.com/submit';
-      const formData = new FormData(form);
-      const payload = Object.fromEntries(formData);
-      
-      delete payload._honey;
-      if (!payload.botcheck) delete payload.botcheck;
-      
-      if (!payload.access_key) {
-        payload.access_key = '391d9c1c-32d5-4f4d-8742-451c6941661a';
-      }
-      
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn ? submitBtn.innerHTML : 'Submit';
-      
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span class="btn-spinner"></span> Sending Message...`;
-      }
-
-      try {
-        const response = await fetch(targetUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (response.ok || response.status === 200 || data.success) {
-          form.reset();
-          window.location.href = 'thank-you.html';
-        } else {
-          const errorMsg = data.message || 'Unable to submit your message right now. Please try again.';
-          showModalPopup('Submission Failed', errorMsg, false);
-        }
-      } catch (err) {
+      if (data.success) {
+        // Success — clear form and redirect (no popup)
+        contactForm.reset();
+        window.location.href = 'https://pranjal-studios-website.pages.dev/thank-you.html';
+        return; // stop — don't hit the finally restore below
+      } else {
+        // API returned failure
         showModalPopup(
-          'Network Error',
-          'Failed to send message due to a connection issue. Please check your internet connection and try again.',
+          'Submission Failed',
+          data.message || 'Unable to send your message right now. Please try again.',
           false
         );
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-        }
       }
-    });
+    } catch (err) {
+      // Network / connection error
+      showModalPopup(
+        'Network Error',
+        'Failed to send your message due to a connection issue. Please check your internet and try again.',
+        false
+      );
+    }
+
+    // Restore button only on failure (success navigates away)
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.style.cursor  = 'pointer';
+      submitBtn.innerHTML = 'Send Message &rarr;';
+    }
   });
 }
 
