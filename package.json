@@ -1,0 +1,11 @@
+{
+  "name": "pranjal-studios-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official developer website for PRANJAL STUDIOS (Pranjal Tiwari)",
+  "scripts": {
+    "build": "echo 'Static site - no build step required'",
+    "deploy": "wrangler pages deploy .",
+    "preview": "wrangler pages dev ."
+  }
+}
