@@ -628,7 +628,7 @@ function initCountdownTimer() {
   const timerEl = document.getElementById('countdown-timer');
   if (!timerEl) return;
 
-  let seconds = 5;
+  let seconds = 3;
   timerEl.textContent = seconds;
 
   const interval = setInterval(() => {
