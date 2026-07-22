@@ -251,12 +251,12 @@ body::before {
 }
 
 /* ==========================================================================
-   Social Media Components (Header & Footer)
+   Official Social Media Buttons (Header & Footer)
    ========================================================================== */
 .social-header-icons {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   margin-right: 0.25rem;
 }
 
@@ -264,16 +264,16 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--bg-glass);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms ease, border-color 300ms ease, color 300ms ease, background 300ms ease;
   text-decoration: none;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .social-header-btn:hover {
@@ -283,20 +283,23 @@ body::before {
 
 .social-header-btn.instagram-btn:hover {
   border-color: #e1306c;
-  box-shadow: 0 0 15px rgba(225, 48, 108, 0.4);
-  color: #e1306c;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  box-shadow: 0 0 18px rgba(225, 48, 108, 0.5);
+  color: #ffffff;
 }
 
 .social-header-btn.facebook-btn:hover {
   border-color: #1877f2;
-  box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
-  color: #1877f2;
+  background: #1877f2;
+  box-shadow: 0 0 18px rgba(24, 119, 242, 0.5);
+  color: #ffffff;
 }
 
 .social-header-btn.linkedin-btn:hover {
   border-color: #0a66c2;
-  box-shadow: 0 0 15px rgba(10, 102, 194, 0.4);
-  color: #0a66c2;
+  background: #0a66c2;
+  box-shadow: 0 0 18px rgba(10, 102, 194, 0.5);
+  color: #ffffff;
 }
 
 /* Footer Social Section */
@@ -349,52 +352,55 @@ body::before {
 
 .footer-social-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.social-pill-btn {
+.social-circle-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.75rem 1.4rem;
-  border-radius: 9999px;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-color);
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.9rem;
+  color: var(--text-primary);
   text-decoration: none;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms ease, border-color 300ms ease, background 300ms ease, color 300ms ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.social-pill-btn:hover {
-  transform: translateY(-3px) scale(1.04);
+.social-circle-btn:hover {
+  transform: translateY(-3px) scale(1.1);
+  color: #ffffff;
 }
 
-.social-pill-btn:active {
-  transform: translateY(-1px) scale(0.98);
+.social-circle-btn:active {
+  transform: translateY(-1px) scale(0.96);
 }
 
-.social-pill-btn.instagram-btn:hover {
-  background: linear-gradient(135deg, rgba(225, 48, 108, 0.25), rgba(131, 58, 180, 0.25));
-  border-color: rgba(225, 48, 108, 0.6);
-  box-shadow: 0 8px 25px rgba(225, 48, 108, 0.35);
+.social-circle-btn.instagram-btn:hover {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  border-color: rgba(225, 48, 108, 0.8);
+  box-shadow: 0 0 25px rgba(225, 48, 108, 0.55);
+  color: #ffffff;
 }
 
-.social-pill-btn.facebook-btn:hover {
-  background: linear-gradient(135deg, rgba(24, 119, 242, 0.25), rgba(13, 71, 161, 0.25));
-  border-color: rgba(24, 119, 242, 0.6);
-  box-shadow: 0 8px 25px rgba(24, 119, 242, 0.35);
+.social-circle-btn.facebook-btn:hover {
+  background: #1877f2;
+  border-color: rgba(24, 119, 242, 0.8);
+  box-shadow: 0 0 25px rgba(24, 119, 242, 0.55);
+  color: #ffffff;
 }
 
-.social-pill-btn.linkedin-btn:hover {
-  background: linear-gradient(135deg, rgba(10, 102, 194, 0.25), rgba(2, 119, 181, 0.25));
-  border-color: rgba(10, 102, 194, 0.6);
-  box-shadow: 0 8px 25px rgba(10, 102, 194, 0.35);
+.social-circle-btn.linkedin-btn:hover {
+  background: #0a66c2;
+  border-color: rgba(10, 102, 194, 0.8);
+  box-shadow: 0 0 25px rgba(10, 102, 194, 0.55);
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
