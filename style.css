@@ -646,6 +646,17 @@ ul, ol {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
+.btn-playstore.btn-disabled {
+  cursor: default !important;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.btn-playstore.btn-disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .playstore-text {
   display: flex;
   flex-direction: column;
