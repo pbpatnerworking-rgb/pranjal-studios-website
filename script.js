@@ -471,6 +471,11 @@ function initForms() {
       // 4. Gather Form Data & Submit to Web3Forms API
       const targetUrl = form.getAttribute('action') || 'https://api.web3forms.com/submit';
       const formData = new FormData(form);
+      const payload = Object.fromEntries(formData);
+      
+      if (!payload.access_key) {
+        payload.access_key = '391d9c1c-32d5-4f4d-8742-451c6941661a';
+      }
       
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn ? submitBtn.innerHTML : 'Submit';
@@ -483,7 +488,11 @@ function initForms() {
       try {
         const response = await fetch(targetUrl, {
           method: 'POST',
-          body: formData
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
         });
 
         const data = await response.json();
