@@ -238,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initModalSystem();
   initPageTransitions();
+  initCountdownTimer();
   setCurrentYear();
 });
 
@@ -488,12 +489,8 @@ function initForms() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-          showModalPopup(
-            'Message Sent Successfully!',
-            'Thank you for reaching out! Your message has been sent to developer Pranjal Tiwari (stdhelp.support@gmail.com). We will get back to you shortly.',
-            true
-          );
           form.reset();
+          window.location.href = 'thank-you.html';
         } else {
           const errorMsg = data.message || 'Unable to submit your message right now. Please try again.';
           showModalPopup('Submission Failed', errorMsg, false);
@@ -615,4 +612,24 @@ function showModalPopup(title, message, isSuccess = true) {
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
   });
+}
+
+/* --- Countdown Timer Helper for Thank You Page --- */
+function initCountdownTimer() {
+  const timerEl = document.getElementById('countdown-timer');
+  if (!timerEl) return;
+
+  let seconds = 5;
+  timerEl.textContent = seconds;
+
+  const interval = setInterval(() => {
+    seconds--;
+    if (seconds >= 0 && timerEl) {
+      timerEl.textContent = seconds;
+    }
+    if (seconds <= 0) {
+      clearInterval(interval);
+      window.location.href = 'index.html';
+    }
+  }, 1000);
 }
