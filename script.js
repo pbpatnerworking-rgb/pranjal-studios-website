@@ -418,7 +418,7 @@ const SecuritySystem = {
   }
 };
 
-/* --- Interactive Forms & Validation (FormSubmit) --- */
+/* --- Interactive Forms & Validation (Web3Forms & FormSubmit) --- */
 function initForms() {
   const forms = document.querySelectorAll('form');
   
@@ -428,14 +428,21 @@ function initForms() {
 
       const formId = form.getAttribute('id') || 'generic_form';
       
-      // 1. Rate-Limit Check
+      // 1. Anti-Spam Honeypot Check
+      const honeypot = form.querySelector('[name="botcheck"], [name="_honey"]');
+      if (honeypot && (honeypot.checked || honeypot.value)) {
+        form.reset();
+        return;
+      }
+
+      // 2. Rate-Limit Check
       const rateCheck = SecuritySystem.checkRateLimit(formId);
       if (!rateCheck.allowed) {
         showToast(`Please wait ${rateCheck.remainingSecs} second(s) before submitting again.`, 'warning');
         return;
       }
 
-      // 2. Validate all required inputs & email format
+      // 3. Validate all required inputs & email format
       const inputs = form.querySelectorAll('input, textarea, select');
       let isValid = true;
 
@@ -460,40 +467,43 @@ function initForms() {
         return;
       }
 
-      // 3. Gather & Sanitize Form Data
+      // 4. Gather Form Data & Submit to Web3Forms API
+      const targetUrl = form.getAttribute('action') || 'https://api.web3forms.com/submit';
       const formData = new FormData(form);
-      const payload = {};
-      formData.forEach((value, key) => {
-        payload[key] = SecuritySystem.escapeHTML(String(value));
-      });
       
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn ? submitBtn.innerHTML : 'Submit';
       
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `Sending...`;
+        submitBtn.innerHTML = `<span class="btn-spinner"></span> Sending Message...`;
       }
 
       try {
-        const response = await fetch('https://formsubmit.co/ajax/stdhelp.support@gmail.com', {
+        const response = await fetch(targetUrl, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
+          body: formData
         });
 
-        if (response.ok) {
-          showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showModalPopup(
+            'Message Sent Successfully!',
+            'Thank you for reaching out! Your message has been sent to developer Pranjal Tiwari (stdhelp.support@gmail.com). We will get back to you shortly.',
+            true
+          );
           form.reset();
         } else {
-          showToast('Failed to submit form. Please try again.', 'error');
+          const errorMsg = data.message || 'Unable to submit your message right now. Please try again.';
+          showModalPopup('Submission Failed', errorMsg, false);
         }
       } catch (err) {
-        showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
-        form.reset();
+        showModalPopup(
+          'Network Error',
+          'Failed to send message due to a connection issue. Please check your internet connection and try again.',
+          false
+        );
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -562,4 +572,47 @@ function setCurrentYear() {
   const yearEls = document.querySelectorAll('.current-year');
   const currentYear = new Date().getFullYear();
   yearEls.forEach(el => el.textContent = currentYear);
+}
+
+/* --- Premium Glassmorphic Modal Popup Helper --- */
+function showModalPopup(title, message, isSuccess = true) {
+  let modalOverlay = document.querySelector('.modal-overlay');
+  if (!modalOverlay) {
+    modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    document.body.appendChild(modalOverlay);
+  }
+
+  const iconSvg = isSuccess
+    ? `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
+    : `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+
+  modalOverlay.innerHTML = `
+    <div class="modal-card">
+      <div class="modal-icon-wrapper ${isSuccess ? 'success' : 'error'}">
+        ${iconSvg}
+      </div>
+      <h3 class="modal-title ${isSuccess ? 'text-gradient' : ''}">${title}</h3>
+      <p class="modal-desc">${message}</p>
+      <button type="button" class="btn btn-primary modal-close-btn" style="width: 100%;">Continue</button>
+    </div>
+  `;
+
+  requestAnimationFrame(() => {
+    modalOverlay.classList.add('active');
+  });
+
+  const closeModal = () => {
+    modalOverlay.classList.remove('active');
+    setTimeout(() => {
+      if (modalOverlay.parentElement) modalOverlay.parentElement.removeChild(modalOverlay);
+    }, 300);
+  };
+
+  const closeBtn = modalOverlay.querySelector('.modal-close-btn');
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
 }
