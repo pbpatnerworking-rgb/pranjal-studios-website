@@ -436,14 +436,7 @@ function initForms() {
         return;
       }
 
-      // 2. Rate-Limit Check
-      const rateCheck = SecuritySystem.checkRateLimit(formId);
-      if (!rateCheck.allowed) {
-        showToast(`Please wait ${rateCheck.remainingSecs} second(s) before submitting again.`, 'warning');
-        return;
-      }
-
-      // 3. Validate all required inputs & email format
+      // 2. Validate all required inputs & email format
       const inputs = form.querySelectorAll('input, textarea, select');
       let isValid = true;
 
@@ -468,10 +461,13 @@ function initForms() {
         return;
       }
 
-      // 4. Gather Form Data & Submit to Web3Forms API
+      // 3. Gather Form Data & Submit to Web3Forms API
       const targetUrl = form.getAttribute('action') || 'https://api.web3forms.com/submit';
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData);
+      
+      delete payload._honey;
+      if (!payload.botcheck) delete payload.botcheck;
       
       if (!payload.access_key) {
         payload.access_key = '391d9c1c-32d5-4f4d-8742-451c6941661a';
