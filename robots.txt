@@ -1,0 +1,7 @@
+# Robots.txt for PRANJAL STUDIOS (https://pranjalstudios.com)
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+# Sitemap location
+Sitemap: https://pranjalstudios.com/sitemap.xml
