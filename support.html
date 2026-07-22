@@ -168,11 +168,14 @@
           <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" class="text-gradient">🐛 Submit Bug Report</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Help us fix glitches by describing what happened.</p>
 
-          <form id="bug-report-form" action="https://formsubmit.co/stdhelp.support@gmail.com" method="POST">
-            <!-- Anti-Spam Honeypot -->
-            <input type="text" name="_honey" style="display:none">
-            <input type="hidden" name="_subject" value="New Bug Report - PRANJAL STUDIOS">
-            
+          <form id="bug-report-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Web3Forms Configuration & Anti-Spam Honeypot -->
+            <input type="hidden" name="access_key" value="391d9c1c-32d5-4f4d-8742-451c6941661a" />
+            <input type="hidden" name="from_name" value="PRANJAL STUDIOS - Bug Report" />
+            <input type="hidden" name="subject" value="New Bug Report - PRANJAL STUDIOS" />
+            <input type="hidden" name="redirect" value="https://pranjal-studios-website.pages.dev/thank-you.html" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
             <div class="form-group">
               <label class="form-label" for="bug-app">Select App / Game</label>
               <select id="bug-app" name="app_name" class="form-select" required>
@@ -200,7 +203,7 @@
               <textarea id="bug-details" name="bug_description" class="form-textarea" rows="4" placeholder="What went wrong? Steps to reproduce..." required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Bug Report</button>
+            <button type="submit" id="bug-submit-btn" class="btn btn-primary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>Submit Bug Report</button>
           </form>
         </div>
 
@@ -209,10 +212,13 @@
           <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" class="text-gradient-cyan">💡 Request a Feature</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Have a cool idea? Share it directly with developer Pranjal Tiwari.</p>
 
-          <form id="feature-request-form" action="https://formsubmit.co/stdhelp.support@gmail.com" method="POST">
-            <!-- Anti-Spam Honeypot -->
-            <input type="text" name="_honey" style="display:none">
-            <input type="hidden" name="_subject" value="New Feature Request - PRANJAL STUDIOS">
+          <form id="feature-request-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Web3Forms Configuration & Anti-Spam Honeypot -->
+            <input type="hidden" name="access_key" value="391d9c1c-32d5-4f4d-8742-451c6941661a" />
+            <input type="hidden" name="from_name" value="PRANJAL STUDIOS - Feature Request" />
+            <input type="hidden" name="subject" value="New Feature Request - PRANJAL STUDIOS" />
+            <input type="hidden" name="redirect" value="https://pranjal-studios-website.pages.dev/thank-you.html" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
 
             <div class="form-group">
               <label class="form-label" for="feat-app">Target App / Game</label>
@@ -242,7 +248,7 @@
               <textarea id="feat-details" name="suggestion" class="form-textarea" rows="4" placeholder="Explain how this feature would improve the app..." required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; background: var(--grad-accent);">Submit Feature Idea</button>
+            <button type="submit" id="feat-submit-btn" class="btn btn-primary" style="width: 100%; background: var(--grad-accent); opacity: 0.5; cursor: not-allowed;" disabled>Submit Feature Idea</button>
           </form>
         </div>
       </div>

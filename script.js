@@ -236,6 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initSearchAndFilters();
   initContactFormValidation();
   initForms();
+  initSupportFormsValidation();
+  initSupportForms();
   initScrollAnimations();
   initModalSystem();
   initPageTransitions();
@@ -531,6 +533,100 @@ function initForms() {
       submitBtn.innerHTML = 'Send Message &rarr;';
     }
   });
+}
+
+/* --- Support Page: Realtime Submit Button Enabler --- */
+function initSupportFormsValidation() {
+  // Helper: watch required fields and toggle a submit button
+  function watchForm(formId, btnId, fieldIds) {
+    const form = document.getElementById(formId);
+    const btn  = document.getElementById(btnId);
+    if (!form || !btn) return;
+
+    const emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+    function check() {
+      const allValid = fieldIds.every(id => {
+        const el = document.getElementById(id);
+        if (!el) return false;
+        const val = el.value.trim();
+        if (!val) return false;
+        if (el.type === 'email') return emailRe.test(val);
+        return true;
+      });
+      btn.disabled      = !allValid;
+      btn.style.opacity = allValid ? '1' : '0.5';
+      btn.style.cursor  = allValid ? 'pointer' : 'not-allowed';
+    }
+
+    fieldIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.addEventListener('input', check); el.addEventListener('change', check); }
+    });
+    check(); // run once on init
+  }
+
+  watchForm('bug-report-form',     'bug-submit-btn',  ['bug-app', 'bug-email', 'bug-device', 'bug-details']);
+  watchForm('feature-request-form','feat-submit-btn', ['feat-app', 'feat-email', 'feat-title', 'feat-details']);
+}
+
+/* --- Support Page: Official Web3Forms Integration --- */
+function initSupportForms() {
+  // Generic handler shared by both forms
+  function bindForm(formId, btnId, loadingLabel) {
+    const form = document.getElementById(formId);
+    const btn  = document.getElementById(btnId);
+    if (!form) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      // Honeypot check
+      const botcheck = form.querySelector('[name="botcheck"]');
+      if (botcheck && botcheck.checked) { form.reset(); return; }
+
+      // Loading state
+      if (btn) {
+        btn.disabled      = true;
+        btn.style.opacity = '0.7';
+        btn.style.cursor  = 'not-allowed';
+        btn.innerHTML     = '<span class="btn-spinner"></span> ' + loadingLabel;
+      }
+
+      const json = JSON.stringify(Object.fromEntries(new FormData(form)));
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    json
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          form.reset();
+          window.location.href = 'https://pranjal-studios-website.pages.dev/thank-you.html';
+          return;
+        } else {
+          showModalPopup('Submission Failed', data.message || 'Unable to send right now. Please try again.', false);
+        }
+      } catch (err) {
+        showModalPopup('Network Error', 'Connection issue. Please check your internet and try again.', false);
+      }
+
+      // Restore button on failure only
+      if (btn) {
+        btn.disabled      = false;
+        btn.style.opacity = '1';
+        btn.style.cursor  = 'pointer';
+        btn.innerHTML     = loadingLabel.replace('Sending...', '').trim() ||
+                            (formId === 'bug-report-form' ? 'Submit Bug Report' : 'Submit Feature Idea');
+      }
+    });
+  }
+
+  bindForm('bug-report-form',      'bug-submit-btn',  'Sending Bug Report...');
+  bindForm('feature-request-form', 'feat-submit-btn', 'Sending Feature Request...');
 }
 
 /* --- Scroll Trigger Animations --- */
