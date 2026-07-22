@@ -24,6 +24,8 @@ function initModalSystem() {
       const status = card.getAttribute('data-status') || '🟡 COMING SOON';
       const desc = card.getAttribute('data-description') || '';
       const features = (card.getAttribute('data-features') || '').split('|');
+      const bannerSrc = card.getAttribute('data-banner') || '';
+      const splashSrc = card.getAttribute('data-splash') || '';
 
       // Populate modal content
       document.getElementById('modal-app-icon').src = iconSrc;
@@ -46,6 +48,30 @@ function initModalSystem() {
             featuresList.appendChild(li);
           }
         });
+      }
+
+      const modalGallery = document.querySelector('.modal-gallery');
+      if (modalGallery) {
+        modalGallery.innerHTML = '';
+        if (bannerSrc) {
+          const item = document.createElement('div');
+          item.className = 'screenshot-item';
+          item.style.gridColumn = '1 / -1';
+          item.innerHTML = `<img src="${bannerSrc}" alt="${title} Feature Banner" class="screenshot-img" loading="lazy" />`;
+          modalGallery.appendChild(item);
+        }
+        if (splashSrc) {
+          const item = document.createElement('div');
+          item.className = 'screenshot-item';
+          item.innerHTML = `<img src="${splashSrc}" alt="${title} Splash Graphic" class="screenshot-img" loading="lazy" />`;
+          modalGallery.appendChild(item);
+        }
+        if (iconSrc) {
+          const item = document.createElement('div');
+          item.className = 'screenshot-item';
+          item.innerHTML = `<img src="${iconSrc}" alt="${title} Icon HD" class="screenshot-img" loading="lazy" />`;
+          modalGallery.appendChild(item);
+        }
       }
 
       // Show modal
