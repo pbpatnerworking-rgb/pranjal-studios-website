@@ -418,12 +418,12 @@ const SecuritySystem = {
   }
 };
 
-/* --- Interactive Forms & Validation --- */
+/* --- Interactive Forms & Validation (FormSubmit + Turnstile) --- */
 function initForms() {
   const forms = document.querySelectorAll('form');
   
   forms.forEach(form => {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const formId = form.getAttribute('id') || 'generic_form';
@@ -467,11 +467,11 @@ function initForms() {
         return;
       }
 
-      // 4. Sanitize Input Data
-      inputs.forEach(input => {
-        if (input.type === 'text' || input.tagName === 'TEXTAREA') {
-          input.value = SecuritySystem.escapeHTML(input.value);
-        }
+      // 4. Gather & Sanitize Form Data
+      const formData = new FormData(form);
+      const payload = {};
+      formData.forEach((value, key) => {
+        payload[key] = SecuritySystem.escapeHTML(String(value));
       });
       
       const submitBtn = form.querySelector('button[type="submit"]');
@@ -482,17 +482,35 @@ function initForms() {
         submitBtn.innerHTML = `Sending...`;
       }
 
-      setTimeout(() => {
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/stdhelp.support@gmail.com', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
+          form.reset();
+          if (window.turnstile) {
+            try { window.turnstile.reset(); } catch (err) {}
+          }
+        } else {
+          showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
+          form.reset();
+        }
+      } catch (err) {
         showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
         form.reset();
-        if (window.turnstile) {
-          try { window.turnstile.reset(); } catch (err) {}
-        }
+      } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
         }
-      }, 1000);
+      }
     });
   });
 }

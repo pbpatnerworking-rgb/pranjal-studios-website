@@ -12,7 +12,14 @@
   <meta property="og:image" content="https://pranjalstudios.com/assets/icons/logo.svg" />
   <meta property="og:url" content="https://pranjalstudios.com/support.html" />
 
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Support Desk - PRANJAL STUDIOS" />
+  <meta name="twitter:description" content="Dedicated user support, FAQ, bug reports, and feature requests for PRANJAL STUDIOS Android apps and games." />
+  <meta name="twitter:image" content="https://pranjalstudios.com/assets/icons/logo.svg" />
+
   <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
+  <link rel="preload" href="style.css" as="style" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
@@ -162,10 +169,14 @@
           <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" class="text-gradient">🐛 Submit Bug Report</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Help us fix glitches by describing what happened.</p>
 
-          <form id="bug-report-form">
+          <form id="bug-report-form" action="https://formsubmit.co/stdhelp.support@gmail.com" method="POST">
+            <!-- Anti-Spam Honeypot -->
+            <input type="text" name="_honey" style="display:none">
+            <input type="hidden" name="_subject" value="New Bug Report - PRANJAL STUDIOS">
+            
             <div class="form-group">
               <label class="form-label" for="bug-app">Select App / Game</label>
-              <select id="bug-app" class="form-select" required>
+              <select id="bug-app" name="app_name" class="form-select" required>
                 <option value="">-- Choose Application --</option>
                 <option value="Kids Learning Games">Kids Learning Games</option>
                 <option value="STDHELP Smart Study">STDHELP Smart Study</option>
@@ -177,17 +188,17 @@
 
             <div class="form-group">
               <label class="form-label" for="bug-email">Your Email Address</label>
-              <input type="email" id="bug-email" class="form-input" placeholder="you@example.com" required />
+              <input type="email" id="bug-email" name="email" class="form-input" placeholder="you@example.com" required />
             </div>
 
             <div class="form-group">
               <label class="form-label" for="bug-device">Device Model &amp; Android Version</label>
-              <input type="text" id="bug-device" class="form-input" placeholder="e.g. Samsung Galaxy S23 (Android 14)" required />
+              <input type="text" id="bug-device" name="device" class="form-input" placeholder="e.g. Samsung Galaxy S23 (Android 14)" required />
             </div>
 
             <div class="form-group">
               <label class="form-label" for="bug-details">Describe the Bug</label>
-              <textarea id="bug-details" class="form-textarea" rows="4" placeholder="What went wrong? Steps to reproduce..." required></textarea>
+              <textarea id="bug-details" name="bug_description" class="form-textarea" rows="4" placeholder="What went wrong? Steps to reproduce..." required></textarea>
             </div>
 
             <!-- Cloudflare Turnstile Anti-Spam Widget -->
@@ -202,10 +213,14 @@
           <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" class="text-gradient-cyan">💡 Request a Feature</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Have a cool idea? Share it directly with developer Pranjal Tiwari.</p>
 
-          <form id="feature-request-form">
+          <form id="feature-request-form" action="https://formsubmit.co/stdhelp.support@gmail.com" method="POST">
+            <!-- Anti-Spam Honeypot -->
+            <input type="text" name="_honey" style="display:none">
+            <input type="hidden" name="_subject" value="New Feature Request - PRANJAL STUDIOS">
+
             <div class="form-group">
               <label class="form-label" for="feat-app">Target App / Game</label>
-              <select id="feat-app" class="form-select" required>
+              <select id="feat-app" name="app_name" class="form-select" required>
                 <option value="">-- Choose Application --</option>
                 <option value="Kids Learning Games">Kids Learning Games</option>
                 <option value="STDHELP Smart Study">STDHELP Smart Study</option>
@@ -218,17 +233,17 @@
 
             <div class="form-group">
               <label class="form-label" for="feat-email">Your Email Address</label>
-              <input type="email" id="feat-email" class="form-input" placeholder="you@example.com" required />
+              <input type="email" id="feat-email" name="email" class="form-input" placeholder="you@example.com" required />
             </div>
 
             <div class="form-group">
               <label class="form-label" for="feat-title">Feature Title</label>
-              <input type="text" id="feat-title" class="form-input" placeholder="Short description of feature" required />
+              <input type="text" id="feat-title" name="feature_title" class="form-input" placeholder="Short description of feature" required />
             </div>
 
             <div class="form-group">
               <label class="form-label" for="feat-details">Detailed Suggestion</label>
-              <textarea id="feat-details" class="form-textarea" rows="4" placeholder="Explain how this feature would improve the app..." required></textarea>
+              <textarea id="feat-details" name="suggestion" class="form-textarea" rows="4" placeholder="Explain how this feature would improve the app..." required></textarea>
             </div>
 
             <!-- Cloudflare Turnstile Anti-Spam Widget -->
