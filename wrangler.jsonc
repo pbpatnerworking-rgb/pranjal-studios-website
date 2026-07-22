@@ -1,5 +1,4 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "pranjal-studios-website",
   "compatibility_date": "2026-07-22",
   "assets": {
