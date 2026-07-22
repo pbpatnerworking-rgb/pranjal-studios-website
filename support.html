@@ -14,6 +14,7 @@
 
   <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -189,6 +190,9 @@
               <textarea id="bug-details" class="form-textarea" rows="4" placeholder="What went wrong? Steps to reproduce..." required></textarea>
             </div>
 
+            <!-- Cloudflare Turnstile Anti-Spam Widget -->
+            <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark" style="margin-bottom: 1rem;"></div>
+
             <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Bug Report</button>
           </form>
         </div>
@@ -226,6 +230,9 @@
               <label class="form-label" for="feat-details">Detailed Suggestion</label>
               <textarea id="feat-details" class="form-textarea" rows="4" placeholder="Explain how this feature would improve the app..." required></textarea>
             </div>
+
+            <!-- Cloudflare Turnstile Anti-Spam Widget -->
+            <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark" style="margin-bottom: 1rem;"></div>
 
             <button type="submit" class="btn btn-primary" style="width: 100%; background: var(--grad-accent);">Submit Feature Idea</button>
           </form>

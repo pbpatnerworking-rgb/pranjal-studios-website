@@ -381,6 +381,43 @@ function initSearchAndFilters() {
   });
 }
 
+/* --- Input Sanitization & Anti-Spam Security System --- */
+const SecuritySystem = {
+  // Sanitize text to prevent HTML/XSS injection
+  escapeHTML(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .trim()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  },
+
+  // Validate Email Format
+  isValidEmail(email) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase().trim());
+  },
+
+  // Rate Limiter: Prevent form spamming (max 1 submission every 15 seconds)
+  checkRateLimit(formId) {
+    const key = `ps_ratelimit_${formId || 'form'}`;
+    const lastSubmit = localStorage.getItem(key);
+    const now = Date.now();
+    const COOLDOWN_MS = 15000; // 15 seconds cooldown
+
+    if (lastSubmit && (now - parseInt(lastSubmit, 10)) < COOLDOWN_MS) {
+      const remainingSecs = Math.ceil((COOLDOWN_MS - (now - parseInt(lastSubmit, 10))) / 1000);
+      return { allowed: false, remainingSecs };
+    }
+
+    localStorage.setItem(key, now.toString());
+    return { allowed: true, remainingSecs: 0 };
+  }
+};
+
 /* --- Interactive Forms & Validation --- */
 function initForms() {
   const forms = document.querySelectorAll('form');
@@ -388,6 +425,54 @@ function initForms() {
   forms.forEach(form => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+
+      const formId = form.getAttribute('id') || 'generic_form';
+      
+      // 1. Rate-Limit Check
+      const rateCheck = SecuritySystem.checkRateLimit(formId);
+      if (!rateCheck.allowed) {
+        showToast(`Please wait ${rateCheck.remainingSecs} second(s) before submitting again.`, 'warning');
+        return;
+      }
+
+      // 2. Validate all required inputs & email format
+      const inputs = form.querySelectorAll('input, textarea, select');
+      let isValid = true;
+
+      inputs.forEach(input => {
+        const val = input.value.trim();
+        if (input.hasAttribute('required') && !val) {
+          isValid = false;
+          input.classList.add('input-error');
+        } else {
+          input.classList.remove('input-error');
+        }
+
+        if (input.type === 'email' && val && !SecuritySystem.isValidEmail(val)) {
+          isValid = false;
+          input.classList.add('input-error');
+          showToast('Please enter a valid email address.', 'error');
+        }
+      });
+
+      if (!isValid) {
+        showToast('Please fill out all required fields correctly.', 'error');
+        return;
+      }
+
+      // 3. Turnstile Verification Check (if Turnstile widget present)
+      const turnstileResp = form.querySelector('[name="cf-turnstile-response"]');
+      if (turnstileResp && window.turnstile && !turnstileResp.value) {
+        showToast('Please complete the Cloudflare security verification.', 'warning');
+        return;
+      }
+
+      // 4. Sanitize Input Data
+      inputs.forEach(input => {
+        if (input.type === 'text' || input.tagName === 'TEXTAREA') {
+          input.value = SecuritySystem.escapeHTML(input.value);
+        }
+      });
       
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn ? submitBtn.innerHTML : 'Submit';
@@ -398,8 +483,11 @@ function initForms() {
       }
 
       setTimeout(() => {
-        showToast('Success! Your message has been sent to Pranjal Tiwari.');
+        showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
         form.reset();
+        if (window.turnstile) {
+          try { window.turnstile.reset(); } catch (err) {}
+        }
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
@@ -431,7 +519,7 @@ function initScrollAnimations() {
 }
 
 /* --- Toast Notification Helper --- */
-function showToast(message) {
+function showToast(message, type = 'success') {
   let toastContainer = document.querySelector('.toast-container');
   if (!toastContainer) {
     toastContainer = document.createElement('div');
@@ -439,13 +527,16 @@ function showToast(message) {
     document.body.appendChild(toastContainer);
   }
 
+  const iconSvg = type === 'success' 
+    ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
+    : type === 'warning'
+    ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+    : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+
   const toast = document.createElement('div');
-  toast.className = 'toast';
+  toast.className = `toast toast-${type}`;
   toast.innerHTML = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-    </svg>
+    ${iconSvg}
     <span>${message}</span>
   `;
 

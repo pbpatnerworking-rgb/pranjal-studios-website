@@ -1,0 +1,5 @@
+# Block access to hidden files & security-sensitive resources
+/.git* /404.html 404
+/.env* /404.html 404
+/*.json /404.html 404
+/*.config /404.html 404
