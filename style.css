@@ -250,23 +250,166 @@ body::before {
   100% { filter: hue-rotate(360deg); }
 }
 
-/* Page Transition Overlay */
-.page-transition-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: var(--bg-primary);
-  z-index: 99999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+/* ==========================================================================
+   Social Media Components (Header & Footer)
+   ========================================================================== */
+.social-header-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: 0.25rem;
 }
 
-.page-transition-overlay.active {
-  opacity: 1;
-  pointer-events: all;
+.social-header-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.social-header-btn:hover {
+  transform: translateY(-2px) scale(1.1);
+  color: #ffffff;
+}
+
+.social-header-btn.instagram-btn:hover {
+  border-color: #e1306c;
+  box-shadow: 0 0 15px rgba(225, 48, 108, 0.4);
+  color: #e1306c;
+}
+
+.social-header-btn.facebook-btn:hover {
+  border-color: #1877f2;
+  box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
+  color: #1877f2;
+}
+
+.social-header-btn.linkedin-btn:hover {
+  border-color: #0a66c2;
+  box-shadow: 0 0 15px rgba(10, 102, 194, 0.4);
+  color: #0a66c2;
+}
+
+/* Footer Social Section */
+.footer-social-section {
+  margin-bottom: 3rem;
+}
+
+.footer-social-card {
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.footer-social-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+.footer-social-content {
+  max-width: 550px;
+}
+
+.footer-social-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.footer-social-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer-social-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.social-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.social-pill-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+
+.social-pill-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.social-pill-btn.instagram-btn:hover {
+  background: linear-gradient(135deg, rgba(225, 48, 108, 0.25), rgba(131, 58, 180, 0.25));
+  border-color: rgba(225, 48, 108, 0.6);
+  box-shadow: 0 8px 25px rgba(225, 48, 108, 0.35);
+}
+
+.social-pill-btn.facebook-btn:hover {
+  background: linear-gradient(135deg, rgba(24, 119, 242, 0.25), rgba(13, 71, 161, 0.25));
+  border-color: rgba(24, 119, 242, 0.6);
+  box-shadow: 0 8px 25px rgba(24, 119, 242, 0.35);
+}
+
+.social-pill-btn.linkedin-btn:hover {
+  background: linear-gradient(135deg, rgba(10, 102, 194, 0.25), rgba(2, 119, 181, 0.25));
+  border-color: rgba(10, 102, 194, 0.6);
+  box-shadow: 0 8px 25px rgba(10, 102, 194, 0.35);
+}
+
+@media (max-width: 768px) {
+  .social-header-icons {
+    display: none;
+  }
+  .footer-social-card {
+    padding: 1.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-social-buttons {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 /* Prefers Reduced Motion Accessibility */
