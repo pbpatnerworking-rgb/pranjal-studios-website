@@ -499,8 +499,7 @@ function initForms() {
             try { window.turnstile.reset(); } catch (err) {}
           }
         } else {
-          showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
-          form.reset();
+          showToast('Failed to submit form. Please try again.', 'error');
         }
       } catch (err) {
         showToast('Success! Your message has been sent to Pranjal Tiwari.', 'success');
