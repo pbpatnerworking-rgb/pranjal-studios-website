@@ -26,7 +26,6 @@ pranjal-studios-website/
 ├── support.html                # Support Desk, FAQ accordion, Bug Report & Feature Request forms
 ├── privacy-policy.html         # Google Play Console compliant Privacy Policy (COPPA compliant)
 ├── terms.html                  # Professional Terms & Conditions
-├── contact.html                # Contact Form & Studio details
 ├── 404.html                    # Custom Glassmorphic 404 Error Page
 ├── style.css                   # Glassmorphism UI Design System & CSS Variables
 ├── script.js                   # Dark/Light theme toggle, mobile drawer, search & filter logic
