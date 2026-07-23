@@ -463,9 +463,8 @@ function initContactFormValidation() {
 /* --- Official Web3Forms Integration --- */
 function initForms() {
   const contactForm = document.getElementById('contact-form');
+  const submitBtn   = document.getElementById('contact-submit-btn');
   if (!contactForm) return;
-
-  const submitBtn = document.getElementById('contact-submit-btn');
 
   contactForm.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -479,57 +478,44 @@ function initForms() {
 
     // Show loading state
     if (submitBtn) {
-      submitBtn.disabled = true;
+      submitBtn.disabled      = true;
       submitBtn.style.opacity = '0.7';
-      submitBtn.style.cursor = 'not-allowed';
-      submitBtn.innerHTML = '<span class="btn-spinner"></span> Sending...';
+      submitBtn.style.cursor  = 'not-allowed';
+      submitBtn.innerHTML     = '<span class="btn-spinner"></span> Sending Message...';
     }
 
     // Collect form data (official Web3Forms method)
-    const formData = new FormData(contactForm);
-    const object   = Object.fromEntries(formData);
-    const json     = JSON.stringify(object);
+    const json = JSON.stringify(Object.fromEntries(new FormData(contactForm)));
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method:  'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept':       'application/json'
-        },
-        body: json
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    json
       });
 
       const data = await response.json();
 
       if (data.success) {
-        // Success — clear form and redirect (no popup)
+        // Success — clear form and redirect to thank-you.html
         contactForm.reset();
-        window.location.href = 'https://pranjal-studios-website.pages.dev/thank-you.html';
-        return; // stop — don't hit the finally restore below
+        window.location.href = 'thank-you.html';
+        return;
       } else {
         // API returned failure
-        showModalPopup(
-          'Submission Failed',
-          data.message || 'Unable to send your message right now. Please try again.',
-          false
-        );
+        showModalPopup('Submission Failed', data.message || 'Unable to send right now. Please try again.', false);
       }
     } catch (err) {
       // Network / connection error
-      showModalPopup(
-        'Network Error',
-        'Failed to send your message due to a connection issue. Please check your internet and try again.',
-        false
-      );
+      showModalPopup('Network Error', 'Connection issue. Please check your internet and try again.', false);
     }
 
-    // Restore button only on failure (success navigates away)
+    // Restore button on failure only
     if (submitBtn) {
-      submitBtn.disabled = false;
+      submitBtn.disabled      = false;
       submitBtn.style.opacity = '1';
       submitBtn.style.cursor  = 'pointer';
-      submitBtn.innerHTML = 'Send Message &rarr;';
+      submitBtn.innerHTML     = 'Send Message →';
     }
   });
 }
@@ -604,7 +590,7 @@ function initSupportForms() {
 
         if (data.success) {
           form.reset();
-          window.location.href = 'https://pranjal-studios-website.pages.dev/thank-you.html';
+          window.location.href = 'thank-you.html';
           return;
         } else {
           showModalPopup('Submission Failed', data.message || 'Unable to send right now. Please try again.', false);
