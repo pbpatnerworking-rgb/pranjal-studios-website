@@ -484,14 +484,13 @@ function initForms() {
       submitBtn.innerHTML     = '<span class="btn-spinner"></span> Sending Message...';
     }
 
-    // Collect form data (official Web3Forms method)
-    const json = JSON.stringify(Object.fromEntries(new FormData(contactForm)));
+    // Collect form data (official Web3Forms FormData method)
+    const formData = new FormData(contactForm);
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body:    json
+        method: 'POST',
+        body:   formData
       });
 
       const data = await response.json();
@@ -502,7 +501,7 @@ function initForms() {
         window.location.href = 'thank-you.html';
         return;
       } else {
-        // API returned failure
+        // API returned failure — display actual Web3Forms error message
         showModalPopup('Submission Failed', data.message || 'Unable to send right now. Please try again.', false);
       }
     } catch (err) {
@@ -578,13 +577,12 @@ function initSupportForms() {
         btn.innerHTML     = '<span class="btn-spinner"></span> ' + loadingLabel;
       }
 
-      const json = JSON.stringify(Object.fromEntries(new FormData(form)));
+      const formData = new FormData(form);
 
       try {
         const response = await fetch('https://api.web3forms.com/submit', {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body:    json
+          method: 'POST',
+          body:   formData
         });
         const data = await response.json();
 
