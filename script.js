@@ -574,7 +574,7 @@ function initSupportForms() {
       const botcheck = form.querySelector('[name="botcheck"]');
       if (botcheck && botcheck.checked) { form.reset(); return; }
 
-      // Loading state
+      // Disable submit button while request is being sent to prevent duplicate submissions
       if (btn) {
         btn.disabled      = true;
         btn.style.opacity = '0.7';
@@ -592,23 +592,25 @@ function initSupportForms() {
         const data = await response.json();
 
         if (data.success) {
+          // Success: Clear form and redirect immediately to thank-you page without popup
           form.reset();
-          window.location.href = 'https://pranjal-studios.in/thank-you/';
+          window.location.href = "https://pranjal-studios.in/thank-you/";
           return;
         } else {
+          // Failure: Stay on current page and display appropriate error message
           showModalPopup('Submission Failed', data.message || 'Unable to send right now. Please try again.', false);
         }
       } catch (err) {
+        // Network Error: Stay on current page and display appropriate error message
         showModalPopup('Network Error', 'Connection issue. Please check your internet and try again.', false);
       }
 
-      // Restore button on failure only
+      // Restore submit button on failure only so user can retry
       if (btn) {
         btn.disabled      = false;
         btn.style.opacity = '1';
         btn.style.cursor  = 'pointer';
-        btn.innerHTML     = loadingLabel.replace('Sending...', '').trim() ||
-                            (formId === 'bug-report-form' ? 'Submit Bug Report' : 'Submit Feature Idea');
+        btn.innerHTML     = (formId === 'bug-report-form' ? 'Submit Bug Report' : 'Submit Feature Idea');
       }
     });
   }
