@@ -496,10 +496,9 @@ function initForms() {
       const data = await response.json();
 
       if (data.success) {
-        // Success — clear form and redirect to thank-you page
+        // Success — clear form and redirect directly to Thank You page
         contactForm.reset();
-        const redirectUrl = data.redirect || 'https://pranjal-studios.in/thank-you/';
-        window.location.href = redirectUrl;
+        window.location.href = 'https://pranjal-studios.in/thank-you/';
         return;
       } else {
         // API returned failure — display actual Web3Forms error message
@@ -589,8 +588,7 @@ function initSupportForms() {
 
         if (data.success) {
           form.reset();
-          const redirectUrl = data.redirect || 'https://pranjal-studios.in/thank-you/';
-          window.location.href = redirectUrl;
+          window.location.href = 'https://pranjal-studios.in/thank-you/';
           return;
         } else {
           showModalPopup('Submission Failed', data.message || 'Unable to send right now. Please try again.', false);
