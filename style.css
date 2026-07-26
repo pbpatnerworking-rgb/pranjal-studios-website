@@ -1440,10 +1440,38 @@ ul, ol {
 }
 
 /* --- Forms Styling --- */
+.forms-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  align-items: stretch;
+  margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.forms-container .form-card {
+  max-width: 100%;
+  margin: 0;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.forms-container form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
 .form-card {
   max-width: 700px;
   margin: 0 auto;
   padding: 2.5rem;
+  box-sizing: border-box;
 }
 
 .form-group {
@@ -1451,6 +1479,8 @@ ul, ol {
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-label {
@@ -1461,6 +1491,8 @@ ul, ol {
 
 .form-input, .form-textarea, .form-select {
   width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
   padding: 0.9rem 1.25rem;
   background: var(--bg-glass);
   border: 1px solid var(--border-color);
@@ -1703,6 +1735,14 @@ ul, ol {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .forms-container {
+    gap: 2rem;
+  }
+
+  .forms-container .form-card {
+    padding: 2rem 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1737,10 +1777,30 @@ ul, ol {
   .footer-grid {
     grid-template-columns: 1fr;
   }
+
+  .forms-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .forms-container .form-card {
+    padding: 1.75rem 1.25rem;
+  }
   
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .forms-container .form-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .form-input, .form-textarea, .form-select {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
   }
 }
 
