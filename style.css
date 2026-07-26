@@ -176,17 +176,14 @@ body::before {
 /* Mouse Follower Glow Beam */
 .mouse-glow {
   position: fixed;
-  width: 450px;
-  max-width: 90%;
-  height: 450px;
-  max-height: 90%;
+  width: min(450px, 90%);
+  height: min(450px, 90%);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.08) 40%, transparent 70%);
   pointer-events: none;
   z-index: -1;
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease-out;
-  filter: blur(40px);
   box-sizing: border-box;
 }
 
@@ -197,14 +194,14 @@ body::before {
 /* Hero Section Spotlight Effect */
 .hero-spotlight {
   position: absolute;
-  top: -150px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: min(800px, 100%);
+  max-width: 100%;
+  margin: 0 auto;
   height: 500px;
   background: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.15) 40%, transparent 70%);
-  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
   animation: spotlightPulse 8s infinite alternate ease-in-out;
@@ -247,7 +244,7 @@ body::before {
 .border-glow-animated::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.6), rgba(236, 72, 153, 0.6), rgba(6, 182, 212, 0.6));
@@ -500,48 +497,46 @@ ul, ol {
   max-height: 100%;
   z-index: -1;
   overflow: hidden;
+  contain: paint;
   pointer-events: none;
 }
 
 .bg-glow-1 {
   position: absolute;
-  top: -10%;
-  left: 15%;
+  top: 0;
+  left: 10%;
   width: 550px;
   max-width: min(550px, 85%);
   height: 550px;
   max-height: min(550px, 85%);
   background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
-  filter: blur(60px);
   animation: floatGlow 14s infinite alternate ease-in-out;
 }
 
 .bg-glow-2 {
   position: absolute;
-  bottom: 10%;
-  right: 5%;
+  bottom: 5%;
+  right: 0;
   width: 600px;
   max-width: min(600px, 85%);
   height: 600px;
   max-height: min(600px, 85%);
   background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
-  filter: blur(70px);
   animation: floatGlow 18s infinite alternate-reverse ease-in-out;
 }
 
 .bg-glow-3 {
   position: absolute;
-  top: 40%;
-  left: -5%;
+  top: 35%;
+  left: 0;
   width: 450px;
   max-width: min(450px, 85%);
   height: 450px;
   max-height: min(450px, 85%);
   background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
-  filter: blur(65px);
 }
 
 @keyframes floatGlow {
@@ -1733,12 +1728,13 @@ ul, ol {
 .cta-banner::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   max-width: 500px;
-  height: 500px;
+  margin: 0 auto;
+  height: 100%;
   background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0,0,0,0) 70%);
   pointer-events: none;
 }
