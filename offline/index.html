@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline Mode | PRANJAL STUDIOS</title>
+  <meta name="description" content="You are currently offline. PRANJAL STUDIOS will automatically reconnect when network connectivity is restored." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://pranjal-studios.in/offline/" />
+
+  <!-- PWA Manifest & Mobile Meta Tags -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PRANJAL STUDIOS" />
+  <link rel="apple-touch-icon" href="/assets/icons/logo.svg" />
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/logo.svg" />
+  <link rel="preload" href="/style.css" as="style" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- Background Mesh Glows -->
+  <div class="bg-glow-container" aria-hidden="true">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="/" class="brand-logo" aria-label="PRANJAL STUDIOS Home">
+        <div class="brand-icon">P</div>
+        <span>PRANJAL <span class="text-gradient">STUDIOS</span></span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/apps/" class="nav-link">Apps</a>
+        <a href="/games/" class="nav-link">Games</a>
+        <a href="/about/" class="nav-link">About</a>
+        <a href="/support/" class="nav-link">Support</a>
+        <a href="/privacy/" class="nav-link">Privacy Policy</a>
+        <a href="/terms/" class="nav-link">Terms</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme"></button>
+        <button id="mobile-toggle-btn" class="mobile-toggle-btn" aria-label="Open Navigation Menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <a href="/" class="mobile-nav-link">Home <span>→</span></a>
+    <a href="/apps/" class="mobile-nav-link">Apps <span>→</span></a>
+    <a href="/games/" class="mobile-nav-link">Games <span>→</span></a>
+    <a href="/about/" class="mobile-nav-link">About <span>→</span></a>
+    <a href="/support/" class="mobile-nav-link">Support <span>→</span></a>
+    <a href="/privacy/" class="mobile-nav-link">Privacy Policy <span>→</span></a>
+    <a href="/terms/" class="mobile-nav-link">Terms &amp; Conditions <span>→</span></a>
+  </div>
+
+  <main class="section" style="min-height: 65vh; display: flex; align-items: center;">
+    <div class="container" style="max-width: 640px; text-align: center;">
+      <div class="glass-card" style="padding: 3.5rem 2rem;">
+        <div style="width: 84px; height: 84px; background: rgba(239, 68, 68, 0.12); color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; border: 1px solid rgba(239, 68, 68, 0.25);">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+            <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+            <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+            <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+            <line x1="12" y1="20" x2="12.01" y2="20"></line>
+          </svg>
+        </div>
+        
+        <h1 class="section-title" style="font-size: 2.2rem; margin-bottom: 0.75rem;">You Are <span class="text-gradient">Offline</span></h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          No internet connection detected. Previously visited pages remain available from cache.
+        </p>
+
+        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 0.6rem 1.25rem; border-radius: 50px; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.25); margin-bottom: 2rem;">
+          <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite;"></span>
+          Waiting for internet connection...
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <button type="button" id="offline-retry-btn" class="btn btn-primary">↻ Retry Connection</button>
+          <a href="/" class="btn btn-secondary">🏠 Cached Home</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="brand-logo">
+            <div class="brand-icon">P</div>
+            <span>PRANJAL <span class="text-gradient">STUDIOS</span></span>
+          </a>
+          <p>Official developer website for Android Apps and Games. Created by Pranjal Tiwari.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Navigation</h4>
+          <div class="footer-links">
+            <a href="/" class="footer-link">Home</a>
+            <a href="/apps/" class="footer-link">Apps</a>
+            <a href="/games/" class="footer-link">Games</a>
+            <a href="/about/" class="footer-link">About Studio</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <div class="footer-links">
+            <a href="/privacy/" class="footer-link">Privacy Policy</a>
+            <a href="/terms/" class="footer-link">Terms &amp; Conditions</a>
+            <a href="/support/" class="footer-link">Support Desk</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <span class="footer-link">Developer: <strong>Pranjal Tiwari</strong></span>
+            <a href="mailto:stdhelp.support@gmail.com" class="footer-link">stdhelp.support@gmail.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; <span class="current-year">2026</span> <strong>PRANJAL STUDIOS</strong>. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+  <script>
+    // Automatic re-connection handler
+    function checkReconnect() {
+      if (navigator.onLine) {
+        const savedTarget = sessionStorage.getItem('offline_target') || '/';
+        window.location.href = savedTarget;
+      }
+    }
+
+    window.addEventListener('online', checkReconnect);
+
+    document.getElementById('offline-retry-btn')?.addEventListener('click', () => {
+      if (navigator.onLine) {
+        checkReconnect();
+      } else {
+        const btn = document.getElementById('offline-retry-btn');
+        btn.textContent = 'Checking...';
+        setTimeout(() => { btn.textContent = '↻ Retry Connection'; }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>

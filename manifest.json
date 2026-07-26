@@ -1,0 +1,19 @@
+{
+  "name": "PRANJAL STUDIOS",
+  "short_name": "Pranjal Studios",
+  "description": "Official developer website for PRANJAL STUDIOS Android Apps and Games by Pranjal Tiwari.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0b10",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/assets/icons/logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

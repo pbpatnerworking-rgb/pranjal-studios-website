@@ -216,6 +216,10 @@ function initPageTransitions() {
       const targetUrl = link.getAttribute('href');
       if (!targetUrl || targetUrl.startsWith('#') || link.getAttribute('target') === '_blank') return;
 
+      if (!navigator.onLine) {
+        sessionStorage.setItem('offline_target', targetUrl);
+      }
+
       e.preventDefault();
       transitionOverlay.classList.add('active');
 
@@ -241,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initModalSystem();
   initPageTransitions();
+  initPWA();
   setCurrentYear();
 });
 
@@ -712,6 +717,72 @@ function showModalPopup(title, message, isSuccess = true) {
 
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
+  });
+}
+
+/* --- Progressive Web App (PWA) & Offline Connection Manager --- */
+function initPWA() {
+  // Service Worker Registration
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('ServiceWorker registered:', reg.scope))
+        .catch(err => console.log('ServiceWorker registration error:', err));
+    });
+  }
+
+  // Create Non-Intrusive Offline/Online Status Toast
+  let toast = document.createElement('div');
+  toast.className = 'pwa-network-toast';
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: rgba(15, 23, 42, 0.92);
+    color: #f8fafc;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: translateY(120px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    pointer-events: none;
+  `;
+  document.body.appendChild(toast);
+
+  function showToast(message, isOnline) {
+    toast.innerHTML = isOnline
+      ? `<span style="color:#10b981;">⚡</span> ${message}`
+      : `<span style="color:#ef4444;">📶</span> ${message}`;
+    toast.style.borderColor = isOnline ? 'rgba(16, 185, 129, 0.4)' : 'rgba(239, 68, 68, 0.4)';
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+
+    setTimeout(() => {
+      toast.style.transform = 'translateY(120px)';
+      toast.style.opacity = '0';
+    }, 4000);
+  }
+
+  // Network Status Event Listeners
+  window.addEventListener('online', () => {
+    showToast('Internet connection restored.', true);
+    if (window.location.pathname.includes('/offline')) {
+      const target = sessionStorage.getItem('offline_target') || '/';
+      window.location.href = target;
+    }
+  });
+
+  window.addEventListener('offline', () => {
+    showToast('You are currently offline. Pages remain available from cache.', false);
   });
 }
 
