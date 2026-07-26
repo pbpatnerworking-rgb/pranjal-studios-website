@@ -209,7 +209,7 @@ function initPageTransitions() {
     document.body.appendChild(transitionOverlay);
   }
 
-  const internalLinks = document.querySelectorAll('a[href$=".html"], a[href="index.html"]');
+  const internalLinks = document.querySelectorAll('a[href^="/"], a[href$=".html"]');
 
   internalLinks.forEach(link => {
     link.addEventListener('click', (e) => {
