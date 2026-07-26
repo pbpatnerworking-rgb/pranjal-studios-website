@@ -740,3 +740,42 @@ function initPWA() {
   });
 }
 
+/* --- Strict Viewport & Horizontal Touch Lock Controller --- */
+function initViewportLock() {
+  // Prevent any horizontal scroll displacement
+  window.addEventListener('scroll', () => {
+    if (window.scrollX !== 0) {
+      window.scrollTo(0, window.scrollY);
+    }
+  }, { passive: true });
+
+  // Prevent horizontal touch-swipe panning on touch devices
+  let startX = 0;
+  let startY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches.length === 1) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches.length === 1) {
+      const deltaX = Math.abs(e.touches[0].clientX - startX);
+      const deltaY = Math.abs(e.touches[0].clientY - startY);
+      if (deltaX > deltaY && deltaX > 8) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      }
+    }
+  }, { passive: false });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initViewportLock);
+} else {
+  initViewportLock();
+}
+
