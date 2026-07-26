@@ -20,12 +20,14 @@ This website is designed for ultra-fast load speeds, high Lighthouse performance
 ```text
 pranjal-studios-website/
 ├── index.html                  # Premium Hero, Featured Apps/Games, Stats, CTA, Footer
-├── apps.html                   # Android Apps Showcase with filter & search
-├── games.html                  # Android Games Showcase with feature highlights
-├── about.html                  # Developer Story (Pranjal Tiwari) & Tech Stack
-├── support.html                # Support Desk, FAQ accordion, Bug Report & Feature Request forms
-├── privacy-policy.html         # Google Play Console compliant Privacy Policy (COPPA compliant)
-├── terms.html                  # Professional Terms & Conditions
+├── about/index.html            # Developer Story (Pranjal Tiwari) & Tech Stack
+├── apps/index.html             # Android Apps Showcase with filter & search
+├── games/index.html            # Android Games Showcase with feature highlights
+├── contact/index.html          # Contact Developer & Direct Form
+├── support/index.html          # Support Desk, FAQ accordion, Bug Report & Feature Request forms
+├── privacy/index.html          # Google Play Console compliant Privacy Policy (COPPA compliant)
+├── terms/index.html            # Professional Terms & Conditions
+├── thank-you/index.html        # Form submission confirmation page
 ├── 404.html                    # Custom Glassmorphic 404 Error Page
 ├── style.css                   # Glassmorphism UI Design System & CSS Variables
 ├── script.js                   # Dark/Light theme toggle, mobile drawer, search & filter logic
