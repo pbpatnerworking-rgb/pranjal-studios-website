@@ -94,7 +94,6 @@ html, body {
   padding: 0;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
 }
 
 html {
@@ -119,12 +118,11 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
   background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
               radial-gradient(circle at 80% 30%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
               radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
@@ -137,8 +135,8 @@ body::before {
 
 @keyframes auroraFlow {
   0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-  50% { transform: scale(1.15) rotate(3deg); opacity: 1; }
-  100% { transform: scale(1) rotate(-3deg); opacity: 0.85; }
+  50% { transform: scale(1.03) rotate(1deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-1deg); opacity: 0.85; }
 }
 
 /* Twinkling Starfield in Dark Mode */
@@ -202,7 +200,7 @@ body::before {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 800px;
+  max-width: min(800px, 100vw);
   height: 500px;
   background: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.15) 40%, transparent 70%);
   filter: blur(80px);
@@ -214,7 +212,7 @@ body::before {
 
 @keyframes spotlightPulse {
   0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
-  100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1.02); }
 }
 
 /* Glass Card Light Sheen & Hover Glow */
@@ -494,13 +492,11 @@ ul, ol {
 /* --- Background Mesh Glows --- */
 .bg-glow-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
@@ -511,8 +507,9 @@ ul, ol {
   top: -10%;
   left: 15%;
   width: 550px;
-  max-width: 100%;
+  max-width: min(550px, 85vw);
   height: 550px;
+  max-height: min(550px, 85vw);
   background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
   filter: blur(60px);
@@ -522,10 +519,11 @@ ul, ol {
 .bg-glow-2 {
   position: absolute;
   bottom: 10%;
-  right: 10%;
+  right: 5%;
   width: 600px;
-  max-width: 100%;
+  max-width: min(600px, 85vw);
   height: 600px;
+  max-height: min(600px, 85vw);
   background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
   filter: blur(70px);
@@ -535,10 +533,11 @@ ul, ol {
 .bg-glow-3 {
   position: absolute;
   top: 40%;
-  left: -10%;
+  left: -5%;
   width: 450px;
-  max-width: 100%;
+  max-width: min(450px, 85vw);
   height: 450px;
+  max-height: min(450px, 85vw);
   background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
   filter: blur(65px);
@@ -546,8 +545,8 @@ ul, ol {
 
 @keyframes floatGlow {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -40px) scale(1.1); }
-  100% { transform: translate(-20px, 30px) scale(0.95); }
+  50% { transform: translate(10px, -20px) scale(1.03); }
+  100% { transform: translate(-10px, 15px) scale(0.96); }
 }
 
 /* --- Utility Classes --- */
@@ -867,6 +866,9 @@ ul, ol {
 .section {
   padding: 5rem 0;
   position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .section-header {
@@ -892,6 +894,10 @@ ul, ol {
   min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .hero-grid {
@@ -1840,11 +1846,13 @@ ul, ol {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  max-width: calc(100% - 2rem);
+  max-width: calc(100vw - 2rem);
   width: auto;
+  pointer-events: none;
 }
 
 .toast {
+  pointer-events: auto;
   background: var(--bg-secondary);
   color: var(--text-main);
   border: 1px solid var(--border-glow);
@@ -1854,12 +1862,14 @@ ul, ol {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  animation: slideInRight 0.3s ease-out forwards;
+  animation: toastFadeIn 0.3s ease-out forwards;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+@keyframes toastFadeIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 /* --- Responsive Media Queries System --- */
