@@ -1,7 +1,7 @@
-# Robots.txt for PRANJAL STUDIOS (https://pranjalstudios.com)
+# Robots.txt for PRANJAL STUDIOS (https://pranjal-studios.in)
 User-agent: *
 Allow: /
 Disallow: /404.html
 
 # Sitemap location
-Sitemap: https://pranjalstudios.com/sitemap.xml
+Sitemap: https://pranjal-studios.in/sitemap.xml
