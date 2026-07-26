@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pranjal-studios-v1.1';
+const CACHE_NAME = 'pranjal-studios-v1.2';
 const PRECACHE_ASSETS = [
   '/',
   '/about/',
@@ -13,6 +13,13 @@ const PRECACHE_ASSETS = [
   '/style.css',
   '/script.js',
   '/manifest.json',
+  '/favicon.ico',
+  '/favicon-16x16.png',
+  '/favicon-32x32.png',
+  '/favicon.png',
+  '/apple-touch-icon.png',
+  '/android-chrome-192x192.png',
+  '/android-chrome-512x512.png',
   '/assets/icons/logo.svg',
   '/images/bubble-galaxy-banner.png',
   '/images/bubble-galaxy-icon.png',
