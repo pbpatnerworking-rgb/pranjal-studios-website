@@ -1,23 +1,13 @@
 # Permanent 301 Redirects from legacy .html files to clean URLs
 /index.html / 301
-/about.html /about 301
-/apps.html /apps 301
-/games.html /games 301
-/contact.html /contact 301
-/support.html /support 301
-/privacy-policy.html /privacy 301
-/terms.html /terms 301
-/thank-you.html /thank-you 301
-
-# Clean trailing slash normalization
-/about/ /about 301
-/apps/ /apps 301
-/games/ /games 301
-/contact/ /contact 301
-/support/ /support 301
-/privacy/ /privacy 301
-/terms/ /terms 301
-/thank-you/ /thank-you 301
+/about.html /about/ 301
+/apps.html /apps/ 301
+/games.html /games/ 301
+/contact.html /contact/ 301
+/support.html /support/ 301
+/privacy-policy.html /privacy/ 301
+/terms.html /terms/ 301
+/thank-you.html /thank-you/ 301
 
 # Block access to hidden files & security-sensitive resources
 /.git* /404.html 200

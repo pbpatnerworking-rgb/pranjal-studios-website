@@ -1550,6 +1550,91 @@ ul, ol {
   filter: brightness(1.15);
 }
 
+/* --- About Page Creator Bio Card & Grid --- */
+.creator-bio-card {
+  padding: 3rem;
+  margin-bottom: 4rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.creator-grid {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.creator-profile {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.creator-avatar {
+  width: 110px;
+  height: 110px;
+  font-size: 2.75rem;
+  margin: 0 auto 1.25rem auto;
+  border-radius: var(--radius-xl);
+  flex-shrink: 0;
+}
+
+.creator-profile h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.creator-role {
+  color: var(--accent-cyan);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.creator-text h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  margin-bottom: 1rem;
+  line-height: 1.35;
+}
+
+.creator-text p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: clamp(0.925rem, 1.5vw, 1rem);
+}
+
+@media (max-width: 768px) {
+  .creator-bio-card {
+    padding: 2rem 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .creator-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  .creator-avatar {
+    width: 90px;
+    height: 90px;
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .creator-bio-card {
+    padding: 1.5rem 1rem;
+    margin-bottom: 2rem;
+  }
+  .creator-grid {
+    gap: 1.5rem;
+  }
+}
+
 /* --- Content / Legal Pages --- */
 .legal-content {
   max-width: 900px;
