@@ -742,12 +742,22 @@ function initPWA() {
 
 /* --- Strict Viewport & Horizontal Touch Lock Controller --- */
 function initViewportLock() {
-  // Prevent any horizontal scroll displacement
-  window.addEventListener('scroll', () => {
+  // Prevent any horizontal scroll displacement across window and root elements
+  const enforceZeroScrollX = () => {
     if (window.scrollX !== 0) {
       window.scrollTo(0, window.scrollY);
     }
-  }, { passive: true });
+    if (document.documentElement && document.documentElement.scrollLeft !== 0) {
+      document.documentElement.scrollLeft = 0;
+    }
+    if (document.body && document.body.scrollLeft !== 0) {
+      document.body.scrollLeft = 0;
+    }
+  };
+
+  window.addEventListener('scroll', enforceZeroScrollX, { passive: true });
+  window.addEventListener('resize', enforceZeroScrollX, { passive: true });
+  window.addEventListener('orientationchange', enforceZeroScrollX, { passive: true });
 
   // Prevent horizontal touch-swipe panning on touch devices
   let startX = 0;
@@ -764,7 +774,7 @@ function initViewportLock() {
     if (e.touches && e.touches.length === 1) {
       const deltaX = Math.abs(e.touches[0].clientX - startX);
       const deltaY = Math.abs(e.touches[0].clientY - startY);
-      if (deltaX > deltaY && deltaX > 8) {
+      if (deltaX > deltaY && deltaX > 5) {
         if (e.cancelable) {
           e.preventDefault();
         }

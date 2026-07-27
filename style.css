@@ -84,7 +84,7 @@
 
 /* --- Base Reset & Global Styles --- */
 *, *::before, *::after {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   margin: 0;
   padding: 0;
 }
@@ -92,11 +92,12 @@
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  overscroll-behavior-x: none;
-  touch-action: pan-y;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  overscroll-behavior-x: none !important;
+  touch-action: pan-y !important;
+  position: relative;
 }
 
 html {
@@ -115,9 +116,9 @@ body {
   flex-direction: column;
   transition: background-color var(--transition-normal), color var(--transition-normal);
   position: relative;
-  overflow-x: hidden;
-  overscroll-behavior-x: none;
-  touch-action: pan-y;
+  overflow-x: hidden !important;
+  overscroll-behavior-x: none !important;
+  touch-action: pan-y !important;
 }
 
 /* Aurora Flowing Background Layer */
@@ -461,19 +462,23 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   color: var(--text-main);
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: break-word;
   min-width: 0;
+  max-width: 100%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
   transition: color var(--transition-fast);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
 }
 
-img, svg, video, canvas, iframe {
-  max-width: 100%;
+img, svg, video, canvas, iframe, picture {
+  max-width: 100% !important;
   height: auto;
   display: block;
 }
@@ -560,6 +565,8 @@ ul, ol {
   margin: 0 auto;
   padding: 0 1.5rem;
   box-sizing: border-box;
+  overflow-x: hidden;
+  min-width: 0;
 }
 
 .text-gradient {
@@ -589,6 +596,7 @@ ul, ol {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  overflow: hidden !important;
 }
 
 .glass-card:hover {
@@ -2122,9 +2130,9 @@ ul, ol {
   .filter-tags {
     width: 100%;
     justify-content: flex-start;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    overflow: hidden;
     padding-bottom: 0.5rem;
-    -webkit-overflow-scrolling: touch;
   }
 }
 
