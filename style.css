@@ -772,18 +772,25 @@ ul, ol {
   position: fixed;
   top: 80px;
   left: 0;
+  right: 0;
   width: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
   background: var(--bg-secondary);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
   border-bottom: 1px solid var(--border-color);
-  padding: 1.5rem;
+  padding: 1.25rem 1rem 1.75rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.5rem;
   transform: translateY(-150%);
   opacity: 0;
   visibility: hidden;
   transition: transform var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
   z-index: 999;
+  box-sizing: border-box;
 }
 
 .mobile-drawer.open {
@@ -794,17 +801,54 @@ ul, ol {
 }
 
 .mobile-nav-link {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  color: var(--text-muted);
-  padding: 0.5rem 0;
+  color: var(--text-main);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  min-height: 48px;
+  box-sizing: border-box;
 }
 
 .mobile-nav-link.active, .mobile-nav-link:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--accent-indigo);
   color: var(--accent-indigo);
+  transform: translateX(4px);
+}
+
+.mobile-drawer-socials {
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.mobile-drawer-socials-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.mobile-social-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* --- Buttons System --- */
@@ -1978,8 +2022,26 @@ ul, ol {
   }
 }
 
-/* Small Laptops & Tablets Landscape (992px - 1024px) */
-@media (max-width: 1024px) {
+/* Small Laptops & Tablets Landscape (<1024px) */
+@media (max-width: 1023px) {
+  .nav-menu,
+  .social-header-icons {
+    display: none !important;
+  }
+  
+  .mobile-toggle-btn {
+    display: flex !important;
+  }
+
+  .header-container {
+    height: 72px;
+  }
+
+  .mobile-drawer {
+    top: 72px;
+    max-height: calc(100vh - 72px);
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
