@@ -103,6 +103,7 @@ html, body {
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scrollbar-gutter: stable;
 }
 
 /* --- Aurora Gradient & Animated Mesh System --- */
@@ -490,6 +491,28 @@ button, input, textarea, select {
   border: none;
   outline: none;
   background: none;
+  max-width: 100%;
+}
+
+p, span, li, label, strong, em, code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* --- Universal Flex & Grid Child Containment --- */
+.hero-grid > *,
+.features-grid > *,
+.cards-grid > *,
+.cards-grid-compact > *,
+.forms-container > *,
+.footer-grid > *,
+.creator-grid > *,
+.footer-social-card > *,
+.header-container > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 button {

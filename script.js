@@ -781,11 +781,13 @@ function initViewportLock() {
       }
     }
   }, { passive: false });
+  enforceZeroScrollX();
 }
+
+initViewportLock();
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initViewportLock);
-} else {
-  initViewportLock();
 }
+window.addEventListener('load', initViewportLock);
 
