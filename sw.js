@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pranjal-studios-v1.2';
+const CACHE_NAME = 'pranjal-studios-v1.3';
 const PRECACHE_ASSETS = [
   '/',
   '/about/',
@@ -30,6 +30,9 @@ const PRECACHE_ASSETS = [
   '/images/kids-learning-banner.png',
   '/images/kids-learning-icon.png',
   '/images/kids-learning-splash.png',
+  '/images/maths-nova-banner.png',
+  '/images/maths-nova-icon.png',
+  '/images/maths-nova-splash.png',
   '/images/scanmaster-ai-banner.png',
   '/images/scanmaster-ai-icon.png',
   '/images/scanmaster-ai-splash.png',

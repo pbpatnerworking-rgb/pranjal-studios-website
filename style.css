@@ -1,7 +1,7 @@
 /* ==========================================================================
    PRANJAL STUDIOS - Premium Glassmorphism UI Design System
    Developer: Pranjal Tiwari
-   Support Email: stdhelp.support@gmail.com
+   Support Email: support@pranjal-studios.in
    ========================================================================== */
 
 /* --- Google Fonts Import --- */
@@ -1131,19 +1131,71 @@ ul, ol {
   letter-spacing: 0.5px;
 }
 
-.status-available {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+.status-available,
+.status-live {
+  position: relative;
+  background: rgba(16, 185, 129, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(52, 211, 153, 0.32);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.12);
+  isolation: isolate;
+  z-index: 1;
 }
 
-.status-available::before {
+.status-available::before,
+.status-live::before {
+  display: none;
+}
+
+/* Subtle modern aurora glow background animation */
+.status-available::after,
+.status-live::after {
   content: '';
-  width: 6px;
-  height: 6px;
-  background-color: #10b981;
-  border-radius: 50%;
-  display: inline-block;
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    rgba(16, 185, 129, 0.08) 0%,
+    rgba(52, 211, 153, 0.3) 28%,
+    rgba(6, 182, 212, 0.25) 50%,
+    rgba(52, 211, 153, 0.3) 72%,
+    rgba(16, 185, 129, 0.08) 100%
+  );
+  background-size: 220% 100%;
+  z-index: -1;
+  filter: blur(4px);
+  opacity: 0.65;
+  animation: auroraBadgeGlow 5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes auroraBadgeGlow {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.4;
+    filter: blur(3px);
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.75;
+    filter: blur(5px);
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.4;
+    filter: blur(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-available::after,
+  .status-live::after {
+    animation: none;
+    opacity: 0.45;
+    filter: blur(3px);
+    background-position: 50% 50%;
+  }
 }
 
 .status-coming-soon {

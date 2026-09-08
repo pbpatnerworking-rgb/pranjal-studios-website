@@ -1,7 +1,7 @@
 /* ==========================================================================
    PRANJAL STUDIOS - Master JavaScript
    Developer: Pranjal Tiwari
-   Support Email: stdhelp.support@gmail.com
+   Support Email: support@pranjal-studios.in
    ========================================================================== */
 
 /* --- Modal System Controller --- */

@@ -10,7 +10,7 @@ This website is designed for ultra-fast load speeds, high Lighthouse performance
 
 - **Studio Name**: PRANJAL STUDIOS
 - **Lead Developer**: Pranjal Tiwari
-- **Support Email**: [stdhelp.support@gmail.com](mailto:stdhelp.support@gmail.com)
+- **Support Email**: [support@pranjal-studios.in](mailto:support@pranjal-studios.in)
 - **Website Purpose**: Official developer portfolio & showcase for Android Applications and Games.
 
 ---
@@ -99,4 +99,4 @@ This project contains zero external build step dependencies and is 100% producti
 
 &copy; 2026 **PRANJAL STUDIOS**. All Rights Reserved.  
 Developer: **Pranjal Tiwari**  
-Support: [stdhelp.support@gmail.com](mailto:stdhelp.support@gmail.com)
+Support: [support@pranjal-studios.in](mailto:support@pranjal-studios.in)
