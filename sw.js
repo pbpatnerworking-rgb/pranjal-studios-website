@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pranjal-studios-v1.3';
+const CACHE_NAME = 'pranjal-studios-v1.4';
 const PRECACHE_ASSETS = [
   '/',
   '/about/',
@@ -26,16 +26,13 @@ const PRECACHE_ASSETS = [
   '/images/bubble-galaxy-splash.png',
   '/images/dimag-quiz-banner.png',
   '/images/dimag-quiz-icon.png',
+  '/images/dimag-quiz-logo.png',
   '/images/dimag-quiz-splash.png',
   '/images/kids-learning-banner.png',
   '/images/kids-learning-icon.png',
+  '/images/kids-learning-logo.png',
   '/images/kids-learning-splash.png',
-  '/images/maths-nova-banner.png',
-  '/images/maths-nova-icon.png',
-  '/images/maths-nova-splash.png',
-  '/images/scanmaster-ai-banner.png',
-  '/images/scanmaster-ai-icon.png',
-  '/images/scanmaster-ai-splash.png',
+  '/images/pranjal-tiwari.jpg',
   '/images/stdhelp-study-banner.png',
   '/images/stdhelp-study-icon.png',
   '/images/stdhelp-study-splash.png'
