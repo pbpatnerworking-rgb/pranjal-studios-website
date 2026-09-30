@@ -1080,13 +1080,9 @@ ul, ol {
   width: 64px;
   height: 64px;
   border-radius: var(--radius-md);
-  background: var(--grad-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 1.8rem;
-  font-weight: 800;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
 }
 
 .mockup-info h3 {
